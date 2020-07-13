@@ -62,6 +62,7 @@ class LinkedList:
             current = current.get_next()
         value = self.tail.get_value()
         self.tail = current
+        self.tail.set_next(None)
         return value
 
     def contains(self, value):
@@ -139,7 +140,7 @@ return elements in Last In First Out order.
 # Link List implementation:
 class Stack(LinkedList):
     def __init__(self):
-        super().__init__()
+        self.storage = LinkedList()
         self.size = 0
         
 
@@ -147,12 +148,14 @@ class Stack(LinkedList):
         return self.size
 
     def push(self, value):
-        self.add_to_tail(value)
+        self.storage.add_to_tail(value)
         self.size += 1
 
     def pop(self):
         if self.size > 0:
+            value = self.storage.tail.get_value()
+            self.storage.remove_tail()
             self.size -=1
-            return self.remove_tail()
+            return value
         else:
             return None

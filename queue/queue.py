@@ -73,8 +73,10 @@ class LinkedList:
 
         while current.get_next() is not self.tail:
             current = current.get_next()
+
         value = self.tail.get_value()
         self.tail = current
+        self.tail.set_next(None)
         return value
 
     def contains(self, value):
@@ -155,7 +157,7 @@ Stretch: What if you could only use instances of your Stack class to implement t
 # Linked List implementation
 class Queue(LinkedList):
     def __init__(self):
-        super().__init__()
+        self.storage = LinkedList()
         self.size = 0
         
     
@@ -163,12 +165,14 @@ class Queue(LinkedList):
         return self.size
 
     def enqueue(self, value):
-        self.add_to_head(value)
+        self.storage.add_to_tail(value)
         self.size += 1
 
     def dequeue(self):
         if self.size > 0:
+            value = self.storage.head.get_value()
+            self.storage.remove_head()
             self.size -= 1
-            return self.remove_tail()
+            return value
         else: 
             return None
