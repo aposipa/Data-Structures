@@ -29,6 +29,20 @@ class LinkedList:
         else:
             self.tail.set_next(new_node)
             self.tail = new_node
+
+    def add_to_head(self, value):
+        # create a node
+        new_node = Node(value)
+        # check is list empty
+        if self.head is None and self.tail is None:
+            self.head = new_node
+            self.tail = new_node
+        # if there is a head already
+        else:
+            # "new node" should point to the "current" head of the linked list as its next node (next_node), therefor positioning self ahead of current head node
+            new_node.next_node = self.head
+            # then we say current head should point to the new node
+            self.head = new_node
     
     def remove_head(self):
         # return None if there is no head (i.e. the list is empty)
@@ -104,58 +118,3 @@ class LinkedList:
                 # update the current node to the next node in the list
             current = current.get_next()
         return max_value
-        
-"""
-A stack is a data structure whose primary purpose is to store and
-return elements in Last In First Out order. 
-
-1. Implement the Stack class using an array as the underlying storage structure.
-   Make sure the Stack tests pass.
-2. Re-implement the Stack class, this time using the linked list implementation
-   as the underlying storage structure.
-   Make sure the Stack tests pass.
-3. What is the difference between using an array vs. a linked list when 
-   implementing a Stack?
-"""
-# Array as underlying storage structure
-# class Stack:
-#     def __init__(self):
-#         self.size = 0
-#         self.storage = []
-
-#     def __len__(self):
-#         return self.size
-
-#     def push(self, value):
-#         self.storage.append(value)
-#         self.size += 1
-
-#     def pop(self):
-#         if self.size > 0:
-#             self.size -= 1
-#             return self.storage.pop()
-#         else:
-#             return None
-
-# Link List implementation:
-class Stack(LinkedList):
-    def __init__(self):
-        self.storage = LinkedList()
-        self.size = 0
-        
-
-    def __len__(self):
-        return self.size
-
-    def push(self, value):
-        self.storage.add_to_tail(value)
-        self.size += 1
-
-    def pop(self):
-        if self.size > 0:
-            value = self.storage.tail.get_value()
-            self.storage.remove_tail()
-            self.size -=1
-            return value
-        else:
-            return None
